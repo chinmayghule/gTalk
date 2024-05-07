@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../gtalk"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../gtalk-server"
+		}
+	]
+}
