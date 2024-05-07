@@ -1,6 +1,6 @@
 "use state";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchConversationBtn from "../app/(tabs)/chat/_components/SearchConversationBtn";
 import StartNewConversationBtn from "../app/(tabs)/chat/_components/StartNewConversationBtn";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import AddNewFriendBtn from "@/app/(tabs)/friends/_components/AddNewFriendBtn";
 
 function GeneralHeader({
   isDesktop,
@@ -26,6 +27,7 @@ function GeneralHeader({
     chat: currentPath === "/chat",
     newChat: currentPath === "/chat/new",
     friends: currentPath === "/friends",
+    newFriend: currentPath === "/friends/new",
     profile: currentPath === "/profile",
   };
 
@@ -34,6 +36,15 @@ function GeneralHeader({
     setIsSearchBarOpen(!isSearchBarOpen);
   };
 
+  // effects.
+  // clear searchQuery if search bar has closed.
+  useEffect(() => {
+    if (!isSearchBarOpen) {
+      setSearchQuery("");
+    }
+  }, [isSearchBarOpen, setSearchQuery]);
+
+  // return statements.
   switch (isDesktop) {
     case true: {
       return (
@@ -43,13 +54,20 @@ function GeneralHeader({
               <ArrowLeft />
             </Link>
           )}
+          {currentActivePath.newFriend && (
+            <Link href={"/friends"}>
+              <ArrowLeft />
+            </Link>
+          )}
           <h2 className="text-2xl font-normal mr-auto">
             {currentActivePath.chat && "Chats"}
             {currentActivePath.newChat && "New Chat"}
             {currentActivePath.friends && "Friends"}
+            {currentActivePath.newFriend && "New Friend"}
             {currentActivePath.profile && "Profile"}
           </h2>
           {currentActivePath.chat && <StartNewConversationBtn />}
+          {currentActivePath.friends && <AddNewFriendBtn />}
         </header>
       );
     }
@@ -70,13 +88,20 @@ function GeneralHeader({
                   <ArrowLeft />
                 </Link>
               )}
+              {currentActivePath.newFriend && (
+                <Link href={"/friends"}>
+                  <ArrowLeft />
+                </Link>
+              )}
               <h2 className="text-2xl font-normal mr-auto">
                 {currentActivePath.chat && "Chats"}
                 {currentActivePath.newChat && "New Chat"}
                 {currentActivePath.friends && "Friends"}
+                {currentActivePath.newFriend && "New Friend"}
                 {currentActivePath.profile && "Profile"}
               </h2>
               {currentActivePath.chat && <StartNewConversationBtn />}
+              {currentActivePath.friends && <AddNewFriendBtn />}
               <SearchConversationBtn onClick={handleSearchBarToggle} />
             </>
           ) : (
