@@ -1,3 +1,5 @@
+import { GetFriendRequestResponse } from "@/types";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL!;
 
 export async function logoutUser() {
@@ -136,7 +138,7 @@ export async function getAllFriendRequests({
       throw Error();
     }
 
-    data = await res.json();
+    data = (await res.json()) as GetFriendRequestResponse;
     return data;
   } catch (error: any) {
     console.log(error.message);

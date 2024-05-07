@@ -26,8 +26,7 @@ export type FriendContent = {
 
 export type FriendRequest = {
   friendRequestId: string;
-  sender_id: string;
-  receiver_id: string;
+  potentialFriendId: string;
   friendFirstName: string;
   friendLastName: string;
   profileImageUrl: string | undefined;
@@ -49,4 +48,9 @@ export type Conversation = {
   friendProfileImageUrl: string | undefined;
   friendFirstName: string;
   friendLastName: string;
+};
+
+export type GetFriendRequestResponse = {
+  userId: string;
+  responseFriendRequests: FriendRequest[] | undefined;
 };

@@ -2,12 +2,12 @@
 
 import TabBody from "@/components/tab-container/TabBody";
 import TabHeader from "@/components/tab-container/TabHeader";
-import ChatBody from "./_components/ChatBody";
-import { useState } from "react";
 import { useViewportSize } from "@/contexts/ViewportSize";
-import GeneralHeader from "../../../components/GeneralHeader";
+import { useState } from "react";
+import GeneralHeader from "../../../../components/GeneralHeader";
+import NewConversationBody from "./_components/NewConversationBody";
 
-function Chat() {
+function NewConversation() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { isDesktop } = useViewportSize();
@@ -18,10 +18,10 @@ function Chat() {
         <GeneralHeader {...{ isDesktop, searchQuery, setSearchQuery }} />
       </TabHeader>
       <TabBody>
-        <ChatBody {...{ isDesktop, searchQuery, setSearchQuery }} />
+        <NewConversationBody {...{ isDesktop, searchQuery, setSearchQuery }} />
       </TabBody>
     </>
   );
 }
 
-export default Chat;
+export default NewConversation;

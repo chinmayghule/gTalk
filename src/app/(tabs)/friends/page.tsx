@@ -2,10 +2,10 @@
 
 import TabBody from "@/components/tab-container/TabBody";
 import TabHeader from "@/components/tab-container/TabHeader";
-import ChatBody from "./_components/ChatBody";
 import { useState } from "react";
 import { useViewportSize } from "@/contexts/ViewportSize";
 import GeneralHeader from "../../../components/GeneralHeader";
+import FriendBody from "./_components/FriendBody";
 
 function Chat() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +18,7 @@ function Chat() {
         <GeneralHeader {...{ isDesktop, searchQuery, setSearchQuery }} />
       </TabHeader>
       <TabBody>
-        <ChatBody {...{ isDesktop, searchQuery, setSearchQuery }} />
+        <FriendBody {...{ isDesktop, searchQuery, setSearchQuery }} />
       </TabBody>
     </>
   );

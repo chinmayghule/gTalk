@@ -52,7 +52,7 @@ function TabsLayout({ children }: { children: React.ReactNode }) {
 
     case false: {
       return (
-        <main className="flex flex-col min-h-screen">
+        <main className="min-h-screen flex flex-col">
           <div className="flex-grow overflow-y-scroll no-scrollbar">
             {children}
           </div>

@@ -72,11 +72,16 @@ const config = {
           "75%": { height: "100%", color: "transparent" },
           "100%": { height: "100%", color: "red" },
         },
+        "width-zero-to-full": {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "height-zero-to-full": "height-zero-to-full 0.3s ease-out",
+        "width-zero-to-full": "width-zero-to-full 0.3s ease-out",
       },
     },
   },
