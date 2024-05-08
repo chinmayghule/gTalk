@@ -1,15 +1,4 @@
-import { MessageSquareText, Users } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import UserAvatar from "./UserAvatar";
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { NavItem } from "@/types";
 import NavElement from "./NavElement";
 
