@@ -6,7 +6,8 @@ export async function middleware(request: NextRequest) {
   const tokenCookie = request.cookies.get("token");
   let token: string | undefined;
 
-  // console.log("tokenCookie: ", tokenCookie);
+  console.log("route from middleware: ", request.nextUrl.pathname);
+  console.log("tokenCookie from middleware: ", tokenCookie);
 
   if (tokenCookie === undefined) {
     return NextResponse.redirect(new URL("/login", request.url));
