@@ -1,5 +1,10 @@
+"use client";
+
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
+import useSendFriendRequest from "@/hooks/useSendFriendRequest";
+import { CircleCheckBig } from "lucide-react";
+import { useEffect } from "react";
 
 function PotentialFriendListCard({
   _id,
@@ -16,16 +21,36 @@ function PotentialFriendListCard({
 }) {
   const name = `${firstName} ${lastName}`;
 
+  const { loading, initiateFriendRequest, response, error } =
+    useSendFriendRequest({ receiverId: _id });
+
   // event handlers.
   const handlePotentialFriendCardClick = () => {
-    alert("friend request sent to : " + name);
+    initiateFriendRequest();
+
+    if (response) {
+      alert("friend request sent to : " + name);
+    }
   };
+
+  // effects.
+  // show error through alert message if it exists.
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+
+    if (response) {
+      alert(response);
+    }
+  }, [error, response]);
 
   return (
     <Button
       variant={"outline"}
       className="px-2 py-4 flex flex-row gap-4 items-center justify-normal border-none shadow-none hover:bg-gray-100 h-fit w-full"
       onClick={() => handlePotentialFriendCardClick()}
+      disabled={loading || response}
     >
       <UserAvatar
         firstName={firstName}
@@ -37,6 +62,7 @@ function PotentialFriendListCard({
         <p className="text-xl font-regular">{name}</p>
         <p className="text-base font-regular">{email}</p>
       </div>
+      {response && <CircleCheckBig className="w-10 h-10 text-primary mr-8 " />}
     </Button>
   );
 }

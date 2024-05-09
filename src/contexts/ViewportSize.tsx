@@ -15,7 +15,6 @@ export const ViewportSizeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const breakpointInPixels = 1024;
   const [viewportSize, setViewportSize] = useState<ViewportSize>({
     isDesktop: undefined,
   });

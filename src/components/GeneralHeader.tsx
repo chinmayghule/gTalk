@@ -17,8 +17,8 @@ function GeneralHeader({
   setSearchQuery,
 }: {
   isDesktop: boolean | undefined;
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery?: string;
+  setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
 
@@ -39,7 +39,9 @@ function GeneralHeader({
   // effects.
   // clear searchQuery if search bar has closed.
   useEffect(() => {
-    if (!isSearchBarOpen) {
+    if (setSearchQuery === undefined) return;
+
+    if (!isSearchBarOpen && setSearchQuery) {
       setSearchQuery("");
     }
   }, [isSearchBarOpen, setSearchQuery]);
@@ -76,7 +78,7 @@ function GeneralHeader({
       return (
         <header
           className={cn(
-            "bg-primary text-primary-foreground py-4 pr-4 flex flex-row gap-4 items-center",
+            "bg-primary text-primary-foreground py-4 pr-4 flex flex-row gap-4 items-center h-[4.5rem]",
             !isSearchBarOpen && "pl-4",
             isSearchBarOpen && "pl-2"
           )}
@@ -102,7 +104,9 @@ function GeneralHeader({
               </h2>
               {currentActivePath.chat && <StartNewConversationBtn />}
               {currentActivePath.friends && <AddNewFriendBtn />}
-              <SearchConversationBtn onClick={handleSearchBarToggle} />
+              {!currentActivePath.profile && (
+                <SearchConversationBtn onClick={handleSearchBarToggle} />
+              )}
             </>
           ) : (
             <div className="flex flex-row gap-2 w-full animate-width-zero-to-full">
@@ -115,9 +119,11 @@ function GeneralHeader({
               </Button>
               <Input
                 value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSearchQuery(e.target.value)
-                }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (setSearchQuery === undefined) return;
+
+                  setSearchQuery(e.target.value);
+                }}
                 placeholder="Search"
                 className="text-base flex-grow text-foreground"
               />

@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateToken } from "./lib/utils";
 
-// interface CustomRequestCookies extends RequestCookies {
-//   token: string;
-// }
-
 export async function middleware(request: NextRequest) {
   // get token from cookie
   const tokenCookie = request.cookies.get("token");
   let token: string | undefined;
+
+  // console.log("tokenCookie: ", tokenCookie);
 
   if (tokenCookie === undefined) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -55,5 +53,5 @@ export async function middleware(request: NextRequest) {
 
 //matching paths.
 export const config = {
-  matcher: ["/chat", "/chat/:chatId", "/friends", "/profile", "/friends/new"],
+  matcher: ["/chat", "/friends", "/profile", "/friends/new"],
 };

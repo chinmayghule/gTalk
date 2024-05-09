@@ -16,7 +16,7 @@ export default function useFriendRequestAction({
   const [error, setError] = useState<string | undefined>(undefined);
   const [response, setResponse] = useState<FriendRequestAction>(undefined);
 
-  const performfriendRequestAction = useCallback(async () => {
+  const performFriendRequestAction = useCallback(async () => {
     const data = await friendRequestAction({
       setLoading,
       setError,
@@ -27,5 +27,5 @@ export default function useFriendRequestAction({
     data?.message && setResponse(data?.message);
   }, [friendRequestId, action, setLoading, setError]);
 
-  return { loading, performfriendRequestAction, response, error };
+  return { loading, performFriendRequestAction, response, error };
 }

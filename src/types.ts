@@ -6,9 +6,11 @@ export type NavItem = {
 };
 
 export type UserInfo = {
-  profileImageUrl: string | undefined;
-  email: string;
   _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImageUrl: string | undefined;
 };
 
 export type Friend = {
@@ -53,4 +55,10 @@ export type Conversation = {
 export type GetFriendRequestResponse = {
   userId: string;
   responseFriendRequests: FriendRequest[] | undefined;
+};
+
+export type FriendRequestActionState = {
+  loading: boolean;
+  error: string | undefined;
+  response: "accepted" | "declined" | "canceled" | undefined;
 };

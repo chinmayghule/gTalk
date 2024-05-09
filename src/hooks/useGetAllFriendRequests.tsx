@@ -20,5 +20,5 @@ export default function useGetAllFriendRequests() {
     fetchData();
   }, []);
 
-  return { loading, userId, allFriendRequests, error };
+  return { loading, userId, allFriendRequests, setAllFriendRequests, error };
 }

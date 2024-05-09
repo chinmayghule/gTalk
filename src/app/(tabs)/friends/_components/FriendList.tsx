@@ -9,7 +9,13 @@ function FriendList({
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { loading, allFriends, error } = useGetAllFriends();
+  const { loading, allFriends, setAllFriends, error } = useGetAllFriends();
+
+  const removeFriendFromList = (friendId: string) => {
+    setAllFriends((prev) =>
+      prev?.filter((friend) => friend.friendId !== friendId)
+    );
+  };
 
   return (
     <div>
@@ -18,9 +24,17 @@ function FriendList({
       {allFriends &&
         filterFriendList(allFriends, searchQuery)?.map(
           (friend: Friend, index: number) => (
-            <FriendListCard key={friend.friendId || index} {...{ friend }} />
+            <FriendListCard
+              key={friend.friendId || index}
+              {...{ friend, removeFriendFromList }}
+            />
           )
         )}
+      {!loading && !error && allFriends && allFriends.length === 0 && (
+        <div className="p-4 bg-secondary text-secondary-foreground rounded-md text-center text-lg font-medium mt-4 lg:mt-0">
+          Add friends to see them here
+        </div>
+      )}
     </div>
   );
 }

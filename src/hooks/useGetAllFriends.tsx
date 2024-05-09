@@ -16,5 +16,5 @@ export default function useGetAllFriends() {
     fetchData();
   }, []);
 
-  return { loading, allFriends, error };
+  return { loading, allFriends, setAllFriends, error };
 }

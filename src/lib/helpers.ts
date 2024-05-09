@@ -2,8 +2,17 @@ import { GetFriendRequestResponse } from "@/types";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL!;
 
-export async function logoutUser() {
+export async function logoutUser({
+  setLoading,
+  setError,
+}: {
+  setLoading: (loading: boolean) => void;
+  setError: (error: string) => void;
+}) {
+  let logoutResponse;
+
   try {
+    setLoading(true);
     const res = await fetch(`${baseUrl}/logout`, {
       cache: "no-store",
       credentials: "include",
@@ -12,9 +21,16 @@ export async function logoutUser() {
     if (!res.ok) {
       throw Error();
     }
+
+    logoutResponse = await res.json();
   } catch (error: any) {
     console.log(error.message);
+    setError(error.message);
+  } finally {
+    setLoading(false);
   }
+
+  return logoutResponse as { message: string };
 }
 
 export async function getUserInfo({
