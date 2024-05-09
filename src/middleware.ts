@@ -1,27 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateToken } from "./lib/utils";
+
+type UserInfo = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
 
 export async function middleware(request: NextRequest) {
-  // get token from cookie
-  const tokenCookie = request.cookies.get("token");
-  let token: string | undefined;
+  // get userInfo from cookie
+  const userInfoCookie = request.cookies.get("userInfo");
+  let userInfo: UserInfo | undefined;
 
   console.log("route from middleware: ", request.nextUrl.pathname);
-  console.log("tokenCookie from middleware: ", tokenCookie);
+  console.log("userInfoCookie from middleware: ", userInfoCookie);
 
-  if (tokenCookie === undefined) {
+  if (userInfoCookie === undefined) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  token = tokenCookie.value;
-
-  const payload = await validateToken(token);
-
-  if (!payload || !payload.userId) {
+  try {
+    userInfo = JSON.parse(userInfoCookie.value);
+  } catch (error) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // redirect to chat if user has token and is on '/signup' or '/login'
+  if (
+    !userInfo ||
+    !userInfo.firstName ||
+    !userInfo.lastName ||
+    !userInfo.email
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // redirect to chat if user has userInfo cookie and is on '/signup' or '/login'
   if (
     request.nextUrl.pathname === "/signup" ||
     request.nextUrl.pathname === "/login"
