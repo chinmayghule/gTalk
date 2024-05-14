@@ -11,9 +11,6 @@ export async function middleware(request: NextRequest) {
   const userInfoCookie = request.cookies.get("userInfo");
   let userInfo: UserInfo | undefined;
 
-  console.log("route from middleware: ", request.nextUrl.pathname);
-  console.log("userInfoCookie from middleware: ", userInfoCookie);
-
   if (userInfoCookie === undefined) {
     return NextResponse.redirect(new URL("/login", request.url));
   }

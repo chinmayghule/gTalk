@@ -1,5 +1,8 @@
+"use client";
+
 import UserAvatar from "@/components/UserAvatar";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useConversationId } from "@/contexts/ActiveConversationId";
 import { Conversation } from "@/types";
 
 function ChatListCard({ conversation }: { conversation: Conversation }) {
@@ -15,8 +18,27 @@ function ChatListCard({ conversation }: { conversation: Conversation }) {
 
   const friendName = `${friendFirstName} ${friendLastName}`;
 
+  const { conversationInfo, setConversationInfo } = useConversationId();
+
+  const handleChatListCardClick = () => {
+    setConversationInfo({
+      ...conversationInfo,
+      conversationId: conversationId,
+      conversationDetails: {
+        friendId: friendId,
+        friendFirstName: friendFirstName,
+        friendLastName: friendLastName,
+        profileImageUrl: friendProfileImageUrl,
+      },
+    });
+  };
+
   return (
-    <Card className="px-2 py-4 flex flex-row gap-4 items-center border-none shadow-none hover:bg-gray-100">
+    <Button
+      variant={"ghost"}
+      onClick={handleChatListCardClick}
+      className="px-2 py-4 flex flex-row gap-4 justify-start items-center border-none shadow-none hover:bg-gray-100 h-fit"
+    >
       <UserAvatar
         firstName={friendFirstName}
         lastName={friendLastName}
@@ -24,10 +46,10 @@ function ChatListCard({ conversation }: { conversation: Conversation }) {
         classes="w-16 h-16 border border-primary"
       />
       <div className="flex flex-col gap-0 items-start">
-        <p>{friendName}</p>
+        <p className="text-lg font-medium">{friendName}</p>
         <p>{lastMessage}</p>
       </div>
-    </Card>
+    </Button>
   );
 }
 

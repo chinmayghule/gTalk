@@ -10,20 +10,6 @@ import MessageManager from "@/components/messaging/MessageManager";
 function TabsLayout({ children }: { children: React.ReactNode }) {
   const { isDesktop } = useViewportSize();
 
-  // remove activeChatId from cookie on beforeunload
-  useEffect(() => {
-    const handleBeforeUnload = (e: Event) => {
-      cookie.remove("activeChatId");
-      cookie.remove("isDesktop");
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
   // add cookie to save viewport size (desktop or not)
   useEffect(() => {
     const isDesktopCookie = cookie.get("isDesktop");

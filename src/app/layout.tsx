@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ViewportSizeProvider } from "@/contexts/ViewportSize";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Providers from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +30,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ViewportSizeProvider>{children}</ViewportSizeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

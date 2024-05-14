@@ -62,3 +62,44 @@ export type FriendRequestActionState = {
   error: string | undefined;
   response: "accepted" | "declined" | "canceled" | undefined;
 };
+
+export type Message = {
+  messageId: string;
+  content: string;
+  timestamp: string;
+  sender_id: string;
+  chat_id: string;
+  deleted_by: string[];
+};
+
+export type SocketClientMessageInfo = {
+  content: string;
+  chat_id: string;
+  timestamp: string;
+  friendId: string | undefined;
+};
+
+// types for socket.io
+
+export interface ServerToClientEvents {
+  noArg: () => void;
+  basicEmit: (a: number, b: string, c: Buffer) => void;
+  withAck: (d: string, callback: (e: number) => void) => void;
+  messageFromServer: (data: any) => void;
+}
+
+export interface ClientToServerEvents {
+  messageToServer: (messageInfo: SocketClientMessageInfo) => void;
+  joinRoom: (conversationId: string) => void;
+}
+
+export interface InterServerEvents {
+  ping: () => void;
+}
+
+export interface SocketData {
+  name: string;
+  age: number;
+}
+
+// types for socket.io: end

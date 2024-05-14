@@ -7,11 +7,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDateHHMM(date: Date) {
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  });
+export function formatDateHHMM(dateString: string) {
+  if (dateString === undefined) return null;
+
+  const date = new Date(dateString);
+
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
 }
 
 export function truncateText(text: string, maxLength: number) {

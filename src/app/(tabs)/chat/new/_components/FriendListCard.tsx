@@ -1,5 +1,11 @@
+"use client";
+
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
+import { useConversationId } from "@/contexts/ActiveConversationId";
+import useStartNewConversation from "@/hooks/useStartNewConversation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function FriendListCard({
   friendId,
@@ -16,16 +22,59 @@ function FriendListCard({
 }) {
   const friendName = `${friendFirstName} ${friendLastName}`;
 
+  const { loading, startNewConversationFn, response, error } =
+    useStartNewConversation([friendId]);
+
+  const { conversationInfo, setConversationInfo } = useConversationId();
+
+  const router = useRouter();
+
   // event handlers.
   const handleFriendCardClick = (friendId: string) => {
-    alert("start new conversation with: " + friendId);
+    startNewConversationFn();
   };
+
+  // effects.
+  // actions for when a new conversation has been created.
+  useEffect(() => {
+    if (response) {
+      alert("New conversation has been created.");
+      router.push("/chat");
+
+      const participants = response.participants;
+      const userId = response.userId;
+
+      // identify friend participant from the array.
+      const friendParticipant = participants.find(
+        (participant: any) => participant.participantId !== userId
+      );
+
+      const conversationDetails = {
+        friendId: friendParticipant?.participantId,
+        friendFirstName: friendParticipant?.firstName,
+        friendLastName: friendParticipant?.lastName,
+        profileImageUrl: friendParticipant?.profileImageUrl,
+      };
+
+      setConversationInfo({
+        ...conversationInfo,
+        conversationId: response.chatId,
+        conversationDetails: conversationDetails,
+      });
+    }
+  }, [response, error, router]);
+
+  // actions for when creating a new conversation fails.
+  useEffect(() => {
+    if (error) alert(error);
+  }, [error]);
 
   return (
     <Button
       variant={"outline"}
       className="px-2 py-4 flex flex-row gap-4 items-center justify-normal border-none shadow-none hover:bg-gray-100 h-fit w-full"
       onClick={() => handleFriendCardClick(friendId)}
+      disabled={loading || Boolean(response)}
     >
       <UserAvatar
         firstName={friendFirstName}

@@ -5,11 +5,7 @@ import { useState } from "react";
 //   message: string;
 // };
 
-export default function useStartNewConversation({
-  participants,
-}: {
-  participants: string[];
-}) {
+export default function useStartNewConversation(participants: string[]) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [response, setResponse] = useState<any>(undefined);

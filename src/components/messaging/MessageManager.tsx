@@ -1,7 +1,17 @@
+"use client";
+
+import { useConversationId } from "@/contexts/ActiveConversationId";
+import MessageFallback from "./MessageFallback";
+import MessageContainer from "./MessageContainer";
+
 function MessageManager() {
+  const { conversationInfo } = useConversationId();
+  const conversationId = conversationInfo?.conversationId;
+
   return (
-    <div className="min-h-full grid place-items-center bg-secondary text-secondary-foreground">
-      <p className="text-2xl">Message Manager</p>
+    <div className="min-h-full max-h-screen flex flex-col justify-stretch">
+      {conversationId && <MessageContainer {...{ conversationInfo }} />}
+      {conversationId === undefined && <MessageFallback />}
     </div>
   );
 }

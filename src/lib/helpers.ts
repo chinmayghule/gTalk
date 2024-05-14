@@ -358,6 +358,46 @@ export async function getAllConversations({
   return data;
 }
 
+export async function getSingleConversation({
+  conversationId,
+  abortSignal,
+  setLoading,
+  setError,
+}: {
+  conversationId: string;
+  abortSignal: AbortSignal;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string) => void;
+}) {
+  let data;
+  try {
+    setLoading(true);
+    const res = await fetch(`${baseUrl}/chat/${conversationId}`, {
+      cache: "no-store",
+      credentials: "include",
+      signal: abortSignal,
+    });
+
+    if (!res.ok) {
+      throw Error();
+    }
+
+    data = await res.json();
+    return data;
+  } catch (error: any) {
+    if (error.name === "AbortError") {
+      return;
+    }
+
+    console.log(error.message);
+    setError("We were unable to get your messages. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+
+  return data;
+}
+
 export async function startNewConversation({
   setLoading,
   setError,
