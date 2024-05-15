@@ -58,16 +58,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/chat", request.url));
   }
 
-  // logic for route '/friends/new'
-  if (request.nextUrl.pathname === "/friends/new") {
-    // redirect to chat if user is on `/friends/new`
-    // and the viewport is greater than 1024px
-
-    if (isDesktop === "false") {
-      return NextResponse.redirect(new URL("/chat", request.url));
-    }
-  }
-
   // logic for route '/chat/activeChat'
   if (request.nextUrl.pathname === "/chat/activeChat") {
     if (isDesktop === "true") {
@@ -85,6 +75,7 @@ export const config = {
     "/signup",
     "/login",
     "/chat",
+    "/chat/new",
     "/friends",
     "/profile",
     "/friends/new",
