@@ -23,31 +23,33 @@ export async function middleware(request: NextRequest) {
   const userInfoCookie = request.cookies.get("userInfo");
   let userInfo: UserInfo | undefined;
 
-  if (userInfoCookie === undefined) {
+  if (userInfoCookie === undefined && !publicPaths.includes(currentPath)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   const isDesktopCookie = request.cookies.get("isDesktop");
 
-  if (isDesktopCookie === undefined) {
+  if (isDesktopCookie === undefined && !publicPaths.includes(currentPath)) {
     return NextResponse.redirect(new URL("/chat", request.url));
   }
 
-  const isDesktop = isDesktopCookie.value;
+  if (
+    (userInfoCookie === undefined || isDesktopCookie === undefined) &&
+    publicPaths.includes(currentPath)
+  ) {
+    return NextResponse.next();
+  }
+
+  const isDesktop = isDesktopCookie?.value;
   console.log("isDesktop", isDesktop);
 
   try {
-    userInfo = JSON.parse(userInfoCookie.value);
+    userInfo = userInfoCookie && JSON.parse(userInfoCookie?.value);
   } catch (error) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (
-    !userInfo ||
-    !userInfo.firstName ||
-    !userInfo.lastName ||
-    !userInfo.email
-  ) {
+  if (!userInfo && !publicPaths.includes(currentPath)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

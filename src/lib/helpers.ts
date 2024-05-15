@@ -1,6 +1,7 @@
 import { GetFriendRequestResponse } from "@/types";
 import apiClient from "./axiosConfig";
 import axios from "axios";
+import cookie from "cookiejs";
 
 // const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL!;
 
@@ -18,6 +19,9 @@ export async function logoutUser({
     const res = await apiClient.get("/logout");
 
     logoutResponse = await res.data;
+
+    cookie.remove("token");
+    cookie.remove("userInfo");
   } catch (error: any) {
     console.log(error.message);
     setError(error.message);
