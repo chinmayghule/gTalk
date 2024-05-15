@@ -1,5 +1,6 @@
 "use client";
 
+import cookie from "cookiejs";
 // SocketContext.tsx
 import { createContext, useContext, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
@@ -19,6 +20,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const socket = io(process.env.NEXT_PUBLIC_BASE_API_URL!, {
     withCredentials: true,
+    extraHeaders: {
+      Authorization: `Bearer ${cookie.get("token")}`,
+    },
   });
 
   return (
