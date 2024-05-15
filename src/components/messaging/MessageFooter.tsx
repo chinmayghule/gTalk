@@ -13,7 +13,7 @@ import { useConversationId } from "@/contexts/ActiveConversationId";
 function MessageFooter({
   socket,
 }: {
-  socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+  socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
 }) {
   const [message, setMessage] = useState("");
   const { conversationInfo } = useConversationId();
@@ -24,6 +24,7 @@ function MessageFooter({
     e.preventDefault();
 
     if (conversationId === undefined) return;
+    if (!socket) return;
 
     const messageInfo: SocketClientMessageInfo = {
       content: message,

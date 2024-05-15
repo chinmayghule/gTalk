@@ -21,7 +21,7 @@ function FriendList({
         </Card>
       )}
       {error && (
-        <Card className="border-none shadow-none p-4 text-center text-xl bg-destructive text-destructive">
+        <Card className="border-none shadow-none py-4 px-8 text-left text-xl bg-destructive text-primary-foreground font-semibold">
           {error}
         </Card>
       )}

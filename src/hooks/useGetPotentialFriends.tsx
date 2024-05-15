@@ -3,7 +3,7 @@ import { PotentialFriend } from "@/types";
 import { useEffect, useState } from "react";
 
 export default function useGetAllPotentialFriends(query: string) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [allPotentialFriends, setAllPotentialFriends] = useState<
     PotentialFriend[] | undefined
@@ -12,12 +12,14 @@ export default function useGetAllPotentialFriends(query: string) {
 
   useEffect(() => {
     async function fetchData() {
+      if (query.length === 0) return [];
+
       const data = await getPotentialFriends({ query, setLoading, setError });
       data && setAllPotentialFriends(data?.users);
       data && setUserId(data?.userId);
     }
 
-    fetchData();
+    query.length && fetchData();
   }, [query]);
 
   return { loading, userId, allPotentialFriends, error };

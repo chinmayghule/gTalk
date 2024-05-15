@@ -4,11 +4,10 @@ import useGetSingleConversation from "@/hooks/useGetSingleConversation";
 import MessageHeader from "./MessageHeader";
 import MessageBody from "./MessageBody";
 import MessageFooter from "./MessageFooter";
-import { Socket, io } from "socket.io-client";
-import { ClientToServerEvents, ServerToClientEvents } from "@/types";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect } from "react";
 import { ConversationInfo } from "@/contexts/ActiveConversationId";
 import MessageFallback from "./MessageFallback";
+import { useSocket } from "@/contexts/SocketContext";
 
 function MessageContainer({
   conversationInfo,
@@ -24,21 +23,23 @@ function MessageContainer({
   const { loading, userId, allMessages, setAllMessages, error } =
     useGetSingleConversation(conversationId);
 
-  const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>(
-    io(process.env.NEXT_PUBLIC_BASE_API_URL!, {
-      withCredentials: true,
-    })
-  );
+  // const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>(
+  //   io(process.env.NEXT_PUBLIC_BASE_API_URL!, {
+  //     withCredentials: true,
+  //   })
+  // );
 
-  const socket = useMemo(() => {
-    return socketRef.current;
-  }, [socketRef]);
+  // const socket = useMemo(() => {
+  //   return socketRef.current;
+  // }, [socketRef]);
+
+  const socket = useSocket();
 
   // effects.
   // listen for incoming message event.
   // cleanup for socket when component unmounts.
   useEffect(() => {
-    if (socket === undefined) return;
+    if (!socket) return;
 
     const handleIncomingMessage = (data: any) => {
       const randomUUID = crypto.randomUUID();

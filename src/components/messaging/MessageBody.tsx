@@ -18,13 +18,14 @@ function MessageBody({
     <div className="flex-grow bg-secondary px-12 py-4 overflow-y-scroll no-scrollbar">
       {loading && <div className="text-2xl">Loading...</div>}
       {error && <div>{error}</div>}
-      {!loading && !error && (
-        <>
-          {allMessages?.map((message: Message, index: number) => (
-            <MessageBubble key={index} {...{ message, userId }} />
-          ))}
-        </>
-      )}
+      {!loading &&
+        !error &&
+        allMessages &&
+        allMessages.length > 0 &&
+        allMessages?.map((message: Message, index: number) => (
+          <MessageBubble key={index} {...{ message, userId }} />
+        ))}
+      {allMessages && allMessages.length === 0 && null}
     </div>
   );
 }

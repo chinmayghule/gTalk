@@ -18,6 +18,18 @@ import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import FormErrorMessage from "@/app/(auth)/_components/FormErrorMessage";
+import apiClient from "@/lib/axiosConfig";
+import cookie from "cookiejs";
+
+type SuccessResponse = {
+  message: string;
+  token: string;
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+};
 
 const schema = z
   .object({
@@ -198,26 +210,22 @@ async function signupUser(
 
   // signup user
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL!}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firstName, lastName, email, password }),
-      credentials: "include",
+    const res = await apiClient.post("/signup", {
+      firstName,
+      lastName,
+      email,
+      password,
     });
 
-    if (!res.ok) {
-      throw Error();
-    }
+    const data: SuccessResponse = await res.data;
+    const { message, token, userInfo } = data;
 
-    if (res.status === 400) {
-      const errorData = await res.json();
-      setError("root", { message: errorData.message });
-      return;
-    }
+    // set token and userInfo as cookies.
+    cookie.set("token", token);
+    cookie.set("userInfo", JSON.stringify(userInfo));
 
-    const data = await res.json();
+    console.log(message);
+
     router.push("/chat");
     console.log(data);
   } catch (error: any) {

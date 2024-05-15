@@ -17,6 +17,18 @@ import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import FormErrorMessage from "@/app/(auth)/_components/FormErrorMessage";
+import apiClient from "@/lib/axiosConfig";
+import cookie from "cookiejs";
+
+type SuccessResponse = {
+  message: string;
+  token: string;
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+};
 
 export default function LoginForm() {
   const schema = z.object({
@@ -133,30 +145,26 @@ async function loginUser(data: FieldValues, setError: any, router: any) {
 
   // signup user
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL!}/login`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const res = await apiClient.post("/login", { email, password });
 
-    if (res.status === 400) {
-      const errorData = await res.json();
-      setError("root", { message: errorData.message });
-      return;
-    }
+    const data: SuccessResponse = await res.data;
+    const { message, token, userInfo } = data;
 
-    const data = await res.json();
-    console.log(data);
+    // set token and userInfo as cookies.
+    cookie.set("token", token);
+    cookie.set("userInfo", JSON.stringify(userInfo));
+
+    console.log(message);
 
     // redirect user to `/chat`
     router.push("/chat");
   } catch (error: any) {
-    if (error.message === "Failed to fetch") {
+    if (error.response && error.response.status === 400) {
+      const errorData = error.response.data;
+      setError("root", { message: errorData.message });
+    } else if (error.message === "Network Error" || !error.response) {
       setError("root", {
-        message: "We failed to log you in. Please try again later.",
+        message: "There's a network problem. Please try again later.",
       });
     }
     console.log(error);

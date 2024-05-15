@@ -48,7 +48,8 @@ function TabsLayout({ children }: { children: React.ReactNode }) {
     }
 
     default: {
-      return <UniversalLoading />;
+      return;
+      <UniversalLoading />;
     }
   }
 }
