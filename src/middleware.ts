@@ -80,9 +80,9 @@ export async function middleware(request: NextRequest) {
 //matching paths.
 export const config = {
   matcher: [
-    // "/signup",
-    // "/login",
-    // "/chat",
+    "/signup",
+    "/login",
+    "/chat",
     "/friends",
     "/profile",
     "/friends/new",
