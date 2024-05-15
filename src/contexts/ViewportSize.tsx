@@ -1,5 +1,6 @@
 "use client";
 
+import cookie from "cookiejs";
 import { useState, useEffect, createContext, useContext } from "react";
 
 export type ViewportSize = {
@@ -22,10 +23,12 @@ export const ViewportSizeProvider = ({
   useEffect(() => {
     const breakpointInPixels = 1024;
     setViewportSize({ isDesktop: window.innerWidth > breakpointInPixels });
+    cookie.set("isDesktop", String(window.innerWidth > breakpointInPixels));
 
     // Optional: Add a resize event listener to update the state when the window size changes
     const handleResize = () => {
       setViewportSize({ isDesktop: window.innerWidth > breakpointInPixels });
+      cookie.set("isDesktop", String(window.innerWidth > breakpointInPixels));
     };
 
     window.addEventListener("resize", handleResize);

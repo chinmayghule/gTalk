@@ -7,6 +7,18 @@ type UserInfo = {
 };
 
 export async function middleware(request: NextRequest) {
+  const publicPaths = ["/signup", "/login"];
+
+  const privatePaths = [
+    "/chat",
+    "/chat/activeChat",
+    "/friends",
+    "/friends/new",
+    "/profile",
+  ];
+
+  const currentPath = request.nextUrl.pathname;
+
   // get userInfo from cookie
   const userInfoCookie = request.cookies.get("userInfo");
   let userInfo: UserInfo | undefined;
@@ -14,6 +26,15 @@ export async function middleware(request: NextRequest) {
   if (userInfoCookie === undefined) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  const isDesktopCookie = request.cookies.get("isDesktop");
+
+  if (isDesktopCookie === undefined) {
+    return NextResponse.redirect(new URL("/chat", request.url));
+  }
+
+  const isDesktop = isDesktopCookie.value;
+  console.log("isDesktop", isDesktop);
 
   try {
     userInfo = JSON.parse(userInfoCookie.value);
@@ -31,10 +52,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // redirect to chat if user has userInfo cookie and is on '/signup' or '/login'
-  if (
-    request.nextUrl.pathname === "/signup" ||
-    request.nextUrl.pathname === "/login"
-  ) {
+  if (publicPaths.includes(currentPath)) {
     return NextResponse.redirect(new URL("/chat", request.url));
   }
 
@@ -42,17 +60,15 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/friends/new") {
     // redirect to chat if user is on `/friends/new`
     // and the viewport is greater than 1024px
-    const isDesktopCookie = request.cookies.get("isDesktop");
 
-    if (isDesktopCookie === undefined) {
+    if (isDesktop === "false") {
       return NextResponse.redirect(new URL("/chat", request.url));
     }
+  }
 
-    const isDesktop = isDesktopCookie.value;
-
-    console.log("isDesktop: ", isDesktop);
-
-    if (!Boolean(isDesktop)) {
+  // logic for route '/chat/activeChat'
+  if (request.nextUrl.pathname === "/chat/activeChat") {
+    if (isDesktop === "true") {
       return NextResponse.redirect(new URL("/chat", request.url));
     }
   }
@@ -63,5 +79,13 @@ export async function middleware(request: NextRequest) {
 
 //matching paths.
 export const config = {
-  matcher: ["/chat", "/friends", "/profile", "/friends/new"],
+  matcher: [
+    // "/signup",
+    // "/login",
+    // "/chat",
+    "/friends",
+    "/profile",
+    "/friends/new",
+    "/chat/activeChat",
+  ],
 };

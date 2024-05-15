@@ -9,6 +9,9 @@ import {
   SocketClientMessageInfo,
 } from "@/types";
 import { useConversationId } from "@/contexts/ActiveConversationId";
+import { useViewportSize } from "@/contexts/ViewportSize";
+import { Button } from "../ui/button";
+import { SendHorizontal } from "lucide-react";
 
 function MessageFooter({
   socket,
@@ -19,6 +22,7 @@ function MessageFooter({
   const { conversationInfo } = useConversationId();
   const { conversationId, conversationDetails } = conversationInfo!;
   const { friendId } = conversationDetails!;
+  const { isDesktop } = useViewportSize();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,16 +42,30 @@ function MessageFooter({
   };
 
   return (
-    <div className="p-6 min-h-[3.5rem] flex-shrink-0 bg-primary text-primary-foreground font-medium text-xl">
-      <form onSubmit={onSubmit}>
+    <div className="px-4 lg:px-12 py-4 min-h-[3.5rem] flex-shrink-0 bg-primary text-primary-foreground font-medium text-xl mt-auto">
+      <form onSubmit={onSubmit} className="flex flex-row gap-4 items-center">
         <Input
           className="text-black text-lg"
           placeholder="Type a message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
+        {!isDesktop && <SubmitMessageBtn />}
       </form>
     </div>
+  );
+}
+
+function SubmitMessageBtn() {
+  return (
+    <Button
+      type="submit"
+      variant={"ghost"}
+      size={"icon"}
+      className="bg-secondary text-secondary-foreground"
+    >
+      <SendHorizontal />
+    </Button>
   );
 }
 

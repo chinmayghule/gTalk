@@ -23,16 +23,6 @@ function MessageContainer({
   const { loading, userId, allMessages, setAllMessages, error } =
     useGetSingleConversation(conversationId);
 
-  // const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>(
-  //   io(process.env.NEXT_PUBLIC_BASE_API_URL!, {
-  //     withCredentials: true,
-  //   })
-  // );
-
-  // const socket = useMemo(() => {
-  //   return socketRef.current;
-  // }, [socketRef]);
-
   const socket = useSocket();
 
   // effects.
@@ -72,8 +62,6 @@ function MessageContainer({
 
   // re-render if userId is changed.
   useEffect(() => {}, [userId]);
-
-  if (userId === undefined) return <MessageFallback />;
 
   return (
     <>

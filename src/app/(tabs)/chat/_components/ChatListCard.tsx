@@ -3,7 +3,9 @@
 import UserAvatar from "@/components/UserAvatar";
 import { Button } from "@/components/ui/button";
 import { useConversationId } from "@/contexts/ActiveConversationId";
+import { useViewportSize } from "@/contexts/ViewportSize";
 import { Conversation } from "@/types";
+import { useRouter } from "next/navigation";
 
 function ChatListCard({ conversation }: { conversation: Conversation }) {
   const {
@@ -19,6 +21,8 @@ function ChatListCard({ conversation }: { conversation: Conversation }) {
   const friendName = `${friendFirstName} ${friendLastName}`;
 
   const { conversationInfo, setConversationInfo } = useConversationId();
+  const { isDesktop } = useViewportSize();
+  const router = useRouter();
 
   const handleChatListCardClick = () => {
     setConversationInfo({
@@ -31,6 +35,13 @@ function ChatListCard({ conversation }: { conversation: Conversation }) {
         profileImageUrl: friendProfileImageUrl,
       },
     });
+
+    console.log("card clicked", isDesktop);
+
+    if (!isDesktop) {
+      console.log("redirecting...");
+      router.push("/chat/activeChat");
+    }
   };
 
   return (

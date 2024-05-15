@@ -6,8 +6,10 @@ function MessageBubble({
   userId,
 }: {
   message: Message;
-  userId: string;
+  userId: string | undefined;
 }) {
+  if (userId === undefined) return null;
+
   const isSentByUser = message.sender_id === userId;
 
   const formattedDate = formatDateHHMM(message.timestamp);
