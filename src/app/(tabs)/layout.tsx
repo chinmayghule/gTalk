@@ -24,7 +24,7 @@ function TabsLayout({ children }: { children: React.ReactNode }) {
     case true: {
       return (
         <SocketProvider>
-          <main className="min-h-dvh flex flex-row items-stretch">
+          <main className="min-h-dvh max-h-dvh flex flex-row items-stretch">
             <Navbar />
             <aside className="overflow-y-scroll no-scrollbar w-[32rem] flex-shrink-0">
               {children}
@@ -42,7 +42,7 @@ function TabsLayout({ children }: { children: React.ReactNode }) {
     case false: {
       return (
         <SocketProvider>
-          <main className="min-h-dvh flex flex-col">
+          <main className="min-h-dvh max-h-dvh flex flex-col">
             <div className="flex-grow overflow-y-scroll no-scrollbar">
               {children}
             </div>
