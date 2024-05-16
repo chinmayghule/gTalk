@@ -1,5 +1,6 @@
 import { PotentialFriend } from "@/types";
 import PotentialFriendListCard from "./PotentialFriendListCard";
+import CardLoading from "@/components/CardLoading";
 
 function PotentialFriendsList({
   searchQuery,
@@ -14,7 +15,14 @@ function PotentialFriendsList({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <div>
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+        </div>
+      )}
       {error && <div>{error}</div>}
       {!loading &&
         !error &&
