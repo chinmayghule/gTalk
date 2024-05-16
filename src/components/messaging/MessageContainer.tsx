@@ -65,7 +65,7 @@ function MessageContainer({
     socket.emit("joinRoom", conversationId);
     socket.on("messageFromServer", handleIncomingMessage);
 
-    () => {
+    return () => {
       socket.off("messageFromServer", handleIncomingMessage);
     };
   }, [socket, conversationId, allMessages, setAllMessages]);
