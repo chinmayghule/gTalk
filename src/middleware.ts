@@ -7,7 +7,7 @@ type UserInfo = {
 };
 
 export async function middleware(request: NextRequest) {
-  const publicPaths = ["/signup", "/login"];
+  const publicPaths = ["/", "/signup", "/login"];
 
   const privatePaths = [
     "/chat",

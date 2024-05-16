@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FieldValues, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -20,6 +20,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import FormErrorMessage from "@/app/(auth)/_components/FormErrorMessage";
 import apiClient from "@/lib/axiosConfig";
 import cookie from "cookiejs";
+import CustomPasswordInput from "@/components/CustomPasswordInput";
 
 type SuccessResponse = {
   message: string;
@@ -56,6 +57,7 @@ export default function Page() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    control,
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -78,11 +80,15 @@ export default function Page() {
             )}
             className="grid gap-4"
           >
-            {errors.root && (
+            {errors.root ? (
               <FormErrorMessage
                 message={errors.root.message as string}
                 isRoot={true}
               />
+            ) : (
+              <div className="text-sm bg-blue-200 text-blue-600 text-center p-2 rounded-md font-semibold">
+                Signing up might be slow due to server cold start.
+              </div>
             )}
 
             <div className="grid grid-cols-2 gap-4">
@@ -140,11 +146,16 @@ export default function Page() {
               <Label htmlFor="password" className="text-base">
                 Password
               </Label>
-              <Input
-                id="password"
-                type="password"
-                {...register("password")}
-                className="text-base"
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <CustomPasswordInput
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
               {errors.password && (
                 <FormErrorMessage message={errors.password.message as string} />
@@ -154,11 +165,16 @@ export default function Page() {
               <Label htmlFor="confirmPassword" className="text-base">
                 Confirm Password
               </Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                {...register("confirmPassword")}
-                className="text-base"
+              <Controller
+                name="confirmPassword"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <CustomPasswordInput
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
               {errors.confirmPassword && (
                 <FormErrorMessage

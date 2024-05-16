@@ -10,7 +10,8 @@ function FriendList({
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { loading, allFriends, setAllFriends, error } = useGetAllFriends();
+  const { loading, allFriends, setAllFriends, refreshFriendsList, error } =
+    useGetAllFriends();
 
   const removeFriendFromList = (friendId: string) => {
     setAllFriends((prev) =>

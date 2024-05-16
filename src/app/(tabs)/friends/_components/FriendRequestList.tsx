@@ -23,7 +23,7 @@ function FriendRequestList() {
   if (!allFriendRequests || allFriendRequests.length === 0) return null;
 
   return (
-    <div className="bg-blue-200 p-4 flex flex-col gap-2 rounded-lg mt-4">
+    <div className="bg-blue-200 p-4 flex flex-col gap-4 rounded-lg mt-4">
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
       {allFriendRequests && allFriendRequests.length > 0 && (

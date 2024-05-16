@@ -7,14 +7,14 @@ export default function useGetAllFriends() {
   const [error, setError] = useState<string | undefined>(undefined);
   const [allFriends, setAllFriends] = useState<Friend[] | undefined>(undefined);
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = (await getAllFriends({ setLoading, setError }))?.friends;
-      setAllFriends(data);
-    }
+  const refreshFriendsList = async () => {
+    const data = (await getAllFriends({ setLoading, setError }))?.friends;
+    setAllFriends(data);
+  };
 
-    fetchData();
+  useEffect(() => {
+    refreshFriendsList();
   }, []);
 
-  return { loading, allFriends, setAllFriends, error };
+  return { loading, allFriends, setAllFriends, refreshFriendsList, error };
 }
