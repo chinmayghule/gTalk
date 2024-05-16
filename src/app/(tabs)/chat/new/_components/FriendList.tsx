@@ -1,6 +1,7 @@
 import { Friend } from "@/types";
 import FriendListCard from "./FriendListCard";
 import { Card } from "@/components/ui/card";
+import CardLoading from "@/components/CardLoading";
 
 function FriendList({
   searchQuery,
@@ -16,9 +17,12 @@ function FriendList({
   return (
     <div className="flex flex-col gap-1">
       {loading && (
-        <Card className="border-none shadow-none p-4 text-center text-xl bg-secondary">
-          Loading...
-        </Card>
+        <>
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+        </>
       )}
       {error && (
         <Card className="border-none shadow-none py-4 px-8 text-left text-xl bg-destructive text-primary-foreground font-semibold">

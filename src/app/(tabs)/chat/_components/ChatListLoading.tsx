@@ -1,5 +1,14 @@
+import CardLoading from "@/components/CardLoading";
+
 function ChatListLoading() {
-  return <div>loading...</div>;
+  return (
+    <div>
+      <CardLoading />
+      <CardLoading />
+      <CardLoading />
+      <CardLoading />
+    </div>
+  );
 }
 
 export default ChatListLoading;
