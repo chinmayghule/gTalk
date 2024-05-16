@@ -64,7 +64,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen grid place-items-center">
-      <Card className="mx-auto max-w-2xl p-0 sm:px-8 sm:py-4 max-[768px]:border-none">
+      <Card className="mx-auto max-w-2xl p-0 sm:px-8 sm:py-4 max-[768px]:border-none max-[768px]:shadow-none">
         <CardHeader>
           <CardTitle className="text-3xl">Sign Up</CardTitle>
           <CardDescription className="text-xl">

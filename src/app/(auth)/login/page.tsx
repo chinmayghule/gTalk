@@ -49,7 +49,7 @@ export default function LoginForm() {
 
   return (
     <main className="min-h-screen grid place-items-center">
-      <Card className="mx-auto max-w-2xl p-0 sm:p-8 max-[768px]:border-none">
+      <Card className="mx-auto max-w-2xl p-0 sm:p-8 max-[768px]:border-none max-[768px]:shadow-none">
         <CardHeader>
           <CardTitle className="text-3xl">Login</CardTitle>
           <CardDescription className="text-xl">
