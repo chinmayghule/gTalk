@@ -32,37 +32,31 @@ function MessageContainer({
     if (!socket) return;
 
     const handleIncomingMessage = (data: any) => {
-      const randomUUID = crypto.randomUUID();
+      const timestampString = data.timestamp;
 
       if (allMessages === undefined) return;
 
-      // setAllMessages([
-      //   ...allMessages,
-      //   {
-      //     ...data,
-      //     messageId: randomUUID,
-      //     content: data.content,
-      //     timestamp: new Date(data.timestamp),
-      //     sender_id: data.sender_id,
-      //     chat_id: data.chat_id,
-      //     deleted_by: [],
-      //   },
-      // ]);
-      setAllMessages((prevState) => {
-        if (prevState === undefined) return [];
+      // setAllMessages((prevState) => {
+      //   if (prevState === undefined) return [];
 
-        return [
-          ...prevState,
-          {
-            ...data,
-            messageId: randomUUID,
-            content: data.content,
-            timestamp: new Date(data.timestamp),
-            sender_id: data.sender_id,
-            chat_id: data.chat_id,
-            deleted_by: [],
-          },
-        ];
+      //   return [
+      //     ...prevState,
+      //     {
+      //       ...data,
+      //       messageId: timestampString,
+      //       content: data.content,
+      //       timestamp: new Date(data.timestamp),
+      //       sender_id: data.sender_id,
+      //       chat_id: data.chat_id,
+      //       deleted_by: [],
+      //     },
+      //   ];
+      // });
+      addNewMessage({
+        messageId: timestampString,
+        messageInfo: data,
+        allMessages,
+        setAllMessages,
       });
     };
 
@@ -86,6 +80,31 @@ function MessageContainer({
       <MessageFooter {...{ socket }} />
     </>
   );
+}
+
+function addNewMessage({
+  messageId,
+  messageInfo,
+  allMessages,
+  setAllMessages,
+}: {
+  messageId: string;
+  messageInfo: any;
+  allMessages: any;
+  setAllMessages: any;
+}) {
+  if (allMessages === undefined) return;
+
+  const message = allMessages.find(
+    (messageObj: any) => messageObj.messageId === messageId
+  );
+
+  if (message) return;
+
+  setAllMessages((prevState: any) => {
+    if (prevState === undefined) return [];
+    return [...prevState, messageInfo];
+  });
 }
 
 export default MessageContainer;
