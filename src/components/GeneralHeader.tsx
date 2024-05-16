@@ -95,7 +95,7 @@ function GeneralHeader({
                   <ArrowLeft />
                 </Link>
               )}
-              <h2 className="text-2xl font-normal mr-auto">
+              <h2 className="text-xl font-normal mr-auto">
                 {currentActivePath.chat && "Chats"}
                 {currentActivePath.newChat && "New Chat"}
                 {currentActivePath.friends && "Friends"}

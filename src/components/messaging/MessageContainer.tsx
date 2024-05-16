@@ -36,22 +36,6 @@ function MessageContainer({
 
       if (allMessages === undefined) return;
 
-      // setAllMessages((prevState) => {
-      //   if (prevState === undefined) return [];
-
-      //   return [
-      //     ...prevState,
-      //     {
-      //       ...data,
-      //       messageId: timestampString,
-      //       content: data.content,
-      //       timestamp: new Date(data.timestamp),
-      //       sender_id: data.sender_id,
-      //       chat_id: data.chat_id,
-      //       deleted_by: [],
-      //     },
-      //   ];
-      // });
       addNewMessage({
         messageId: timestampString,
         messageInfo: data,
