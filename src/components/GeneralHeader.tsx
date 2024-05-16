@@ -78,7 +78,7 @@ function GeneralHeader({
       return (
         <header
           className={cn(
-            "bg-primary text-primary-foreground py-4 pr-4 flex flex-row gap-4 items-center h-[4.5rem]",
+            "bg-primary text-primary-foreground py-4 pr-4 flex flex-row gap-4 items-center h-[4.5rem] sticky top-0",
             !isSearchBarOpen && "pl-4",
             isSearchBarOpen && "pl-2"
           )}
