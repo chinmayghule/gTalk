@@ -36,18 +36,34 @@ function MessageContainer({
 
       if (allMessages === undefined) return;
 
-      setAllMessages([
-        ...allMessages,
-        {
-          ...data,
-          messageId: randomUUID,
-          content: data.content,
-          timestamp: new Date(data.timestamp),
-          sender_id: data.sender_id,
-          chat_id: data.chat_id,
-          deleted_by: [],
-        },
-      ]);
+      // setAllMessages([
+      //   ...allMessages,
+      //   {
+      //     ...data,
+      //     messageId: randomUUID,
+      //     content: data.content,
+      //     timestamp: new Date(data.timestamp),
+      //     sender_id: data.sender_id,
+      //     chat_id: data.chat_id,
+      //     deleted_by: [],
+      //   },
+      // ]);
+      setAllMessages((prevState) => {
+        if (prevState === undefined) return [];
+
+        return [
+          ...prevState,
+          {
+            ...data,
+            messageId: randomUUID,
+            content: data.content,
+            timestamp: new Date(data.timestamp),
+            sender_id: data.sender_id,
+            chat_id: data.chat_id,
+            deleted_by: [],
+          },
+        ];
+      });
     };
 
     if (conversationId === undefined) return;
