@@ -15,7 +15,7 @@ function MessageManager() {
   const conversationId = conversationInfo?.conversationId;
 
   return (
-    <div className="h-screen min-h-screen justify-stretch flex flex-col">
+    <div className="h-dvh min-h-dvh justify-stretch flex flex-col">
       {conversationId && <MessageContainer {...{ conversationInfo }} />}
       {conversationId === undefined && isDesktop && <MessageFallback />}
     </div>
