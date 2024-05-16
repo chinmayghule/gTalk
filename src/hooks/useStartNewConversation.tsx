@@ -1,9 +1,5 @@
-import { sendFriendRequest, startNewConversation } from "@/lib/helpers";
+import { startNewConversation } from "@/lib/helpers";
 import { useState } from "react";
-
-// type Response = {
-//   message: string;
-// };
 
 export default function useStartNewConversation(participants: string[]) {
   const [loading, setLoading] = useState(false);

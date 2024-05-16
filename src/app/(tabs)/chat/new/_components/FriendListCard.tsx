@@ -38,7 +38,6 @@ function FriendListCard({
   // actions for when a new conversation has been created.
   useEffect(() => {
     if (response) {
-      alert("New conversation has been created.");
       router.push("/chat");
 
       const participants = response.participants;
