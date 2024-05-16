@@ -1,13 +1,15 @@
 import UserAvatar from "@/components/UserAvatar";
 import useGetUserInfo from "@/hooks/useGetUserInfo";
 import LogoutBtn from "./LogoutBtn";
+import ProfileBodyLoading from "./ProfileBodyLoading";
 
 function ProfileBody() {
   const { loading, userInfo, error } = useGetUserInfo();
 
   if (loading)
     return (
-      <div className="text-center text-lg font-medium p-4">Loading...</div>
+      // <div className="text-center text-lg font-medium p-4">Loading...</div>
+      <ProfileBodyLoading />
     );
 
   if (error)
