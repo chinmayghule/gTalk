@@ -7,16 +7,26 @@ import { useEffect } from "react";
 
 function UnfriendBtn({
   friendId,
+  firstName,
+  lastName,
   removeFriendFromList,
 }: {
   friendId: string;
+  firstName: string;
+  lastName: string;
   removeFriendFromList: (friendId: string) => void;
 }) {
   const { loading, initiateUnfriendRequest, response, error } =
     useSendUnfriendRequest(friendId);
 
   const handleSendUnfriendRequest = () => {
-    initiateUnfriendRequest();
+    const confirmStatus = window.confirm(
+      `Unfriend ${firstName} ${lastName}? This action cannot be reversed.`
+    );
+
+    if (confirmStatus) {
+      initiateUnfriendRequest();
+    }
   };
 
   useEffect(() => {

@@ -26,7 +26,9 @@ function FriendListCard({
         <p>{name}</p>
         <p>{email}</p>
       </div>
-      <UnfriendBtn {...{ friendId, removeFriendFromList }} />
+      <UnfriendBtn
+        {...{ friendId, firstName, lastName, removeFriendFromList }}
+      />
     </Card>
   );
 }
