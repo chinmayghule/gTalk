@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function ProfileBodyLoading() {
   return (
-    <div className="flex flex-col gap-8 items-center mt-4 lg:mt-0">
+    <div className="flex flex-col gap-8 items-center mt-4 lg:mt-0 overflow-y-scroll no-scrollbar">
       <Skeleton className="w-36 h-36 rounded-full" />
 
       <div className="flex flex-col gap-2 items-center justify-center">

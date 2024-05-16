@@ -20,7 +20,7 @@ function ProfileBody() {
     );
 
   return (
-    <div className="flex flex-col gap-8 items-center mt-4 lg:mt-0">
+    <div className="flex flex-col gap-8 items-center mt-4 lg:mt-0 overflow-y-scroll no-scrollbar">
       <UserAvatar
         {...{
           firstName: userInfo?.firstName,
