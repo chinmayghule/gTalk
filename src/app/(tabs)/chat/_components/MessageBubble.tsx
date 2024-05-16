@@ -35,7 +35,7 @@ function MessageBubble({
             "text-base lg:text-xl py-2 px-4 first:mt-4 w-fit": true,
             "rounded-tl-xl rounded-bl-xl rounded-br-xl bg-primary text-primary-foreground":
               !isSentByUser,
-            "rounded-br-xl rounded-tr-xl rounded-bl-xl bg-primary text-primary-foreground":
+            "rounded-br-xl rounded-tr-xl rounded-bl-xl bg-slate-500 text-primary-foreground":
               isSentByUser,
           })}
         >
