@@ -68,7 +68,7 @@ function MessageContainer({
     () => {
       socket.off("messageFromServer", handleIncomingMessage);
     };
-  }, [socket, conversationId]);
+  }, [socket, conversationId, allMessages, setAllMessages]);
 
   // re-render if userId is changed.
   useEffect(() => {}, [userId]);
