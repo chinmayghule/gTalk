@@ -1,6 +1,7 @@
 import useGetAllFriends from "@/hooks/useGetAllFriends";
 import { Friend } from "@/types";
 import FriendListCard from "./FriendListCard";
+import CardLoading from "@/components/CardLoading";
 
 function FriendList({
   searchQuery,
@@ -19,7 +20,14 @@ function FriendList({
 
   return (
     <div>
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <div>
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+          <CardLoading />
+        </div>
+      )}
       {error && <div>Error: {error}</div>}
       {allFriends &&
         filterFriendList(allFriends, searchQuery)?.map(
