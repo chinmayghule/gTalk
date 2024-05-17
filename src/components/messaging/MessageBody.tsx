@@ -1,7 +1,7 @@
 import MessageBubble from "@/app/(tabs)/chat/_components/MessageBubble";
 import { Message } from "@/types";
 import { Atom } from "lucide-react";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 function MessageBody({
   loading,
@@ -29,18 +29,22 @@ function MessageBody({
     chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
   };
 
-  useLayoutEffect(() => {
-    console.log("is isScrolledToBottom: ", isScrolledToBottom());
-
+  // scroll to bottom if messages are added.
+  useEffect(() => {
     if (isScrolledToBottom()) {
       scrollToBottom();
     }
   }, [allMessages]);
 
+  // scroll to bottom when component mounts.
+  useLayoutEffect(() => {
+    scrollToBottom();
+  });
+
   return (
     <div
       ref={chatBodyRef}
-      className="flex-grow flex-auto bg-secondary px-4 lg:px-12 py-4 overflow-y-scroll no-scrollbar"
+      className="flex-grow flex-auto bg-secondary px-4 lg:px-12 py-4 overflow-y-scroll no-scrollbar scroll-smooth"
     >
       {loading && (
         <div className="h-full grid place-items-center text-black">
