@@ -36,8 +36,6 @@ function ChatListCard({ conversation }: { conversation: Conversation }) {
       },
     });
 
-    console.log("card clicked", isDesktop);
-
     if (!isDesktop) {
       console.log("redirecting...");
       router.push("/chat/activeChat");
