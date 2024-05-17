@@ -5,9 +5,10 @@ import MessageFallback from "./MessageFallback";
 import MessageContainer from "./MessageContainer";
 import { redirect } from "next/navigation";
 import { useViewportSize } from "@/contexts/ViewportSize";
+import { useEffect } from "react";
 
 function MessageManager() {
-  const { conversationInfo } = useConversationId();
+  const { conversationInfo, setConversationInfo } = useConversationId();
   const { isDesktop } = useViewportSize();
 
   if (!isDesktop && !conversationInfo) redirect("/chat");
