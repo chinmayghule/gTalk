@@ -189,13 +189,6 @@ export default function Page() {
             >
               Create an account
             </Button>
-            <Button
-              variant="outline"
-              className="w-full  text-base font-semibold"
-              disabled={true}
-            >
-              Sign up with Google
-            </Button>
           </form>
           <div className="mt-4 text-center text-base">
             Already have an account?{" "}
