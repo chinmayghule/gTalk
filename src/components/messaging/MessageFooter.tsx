@@ -29,6 +29,7 @@ function MessageFooter({
 
     if (conversationId === undefined) return;
     if (!socket) return;
+    if (message.length === 0) return;
 
     const messageInfo: SocketClientMessageInfo = {
       content: message,
