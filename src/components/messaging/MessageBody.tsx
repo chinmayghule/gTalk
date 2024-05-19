@@ -44,7 +44,7 @@ function MessageBody({
   return (
     <div
       ref={chatBodyRef}
-      className="flex-grow flex-auto bg-secondary px-4 lg:px-12 py-4 overflow-y-scroll no-scrollbar scroll-smooth"
+      className="flex-grow flex-shrink flex-auto bg-secondary px-4 lg:px-12 py-4 overflow-y-scroll no-scrollbar scroll-smooth"
     >
       {loading && (
         <div className="h-full grid place-items-center text-black">
