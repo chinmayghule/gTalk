@@ -13,9 +13,7 @@ function MessageContainer({
 }: {
   conversationInfo: ConversationInfo | undefined;
 }) {
-  // it's purpose is only to re-render the component
-  // to make sure the new message appears on mobile.
-  const [set, setSet] = useState<number>(0);
+  const [forceUpdate, setForceUpdate] = useState(0);
 
   let conversationId: string | undefined;
 
@@ -45,8 +43,6 @@ function MessageContainer({
         allMessages,
         setAllMessages,
       });
-
-      setSet((prevState) => prevState + 1);
     };
 
     if (conversationId === undefined) return;
@@ -62,10 +58,18 @@ function MessageContainer({
   // re-render if userId is changed.
   useEffect(() => {}, [userId]);
 
-  // re-render if set is changed.
+  // force update if container size changes.
+  // for toggling of virtual keyboard on mobile.
   useEffect(() => {
-    // do nothing.
-  }, [set]);
+    const handleResize = () => {
+      // Trigger a re-render when the keyboard is shown or hidden
+      setForceUpdate((prev) => prev + 1);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
