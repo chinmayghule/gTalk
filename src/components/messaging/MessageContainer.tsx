@@ -4,7 +4,7 @@ import useGetSingleConversation from "@/hooks/useGetSingleConversation";
 import MessageHeader from "./MessageHeader";
 import MessageBody from "./MessageBody";
 import MessageFooter from "./MessageFooter";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ConversationInfo } from "@/contexts/ActiveConversationId";
 import { useSocket } from "@/contexts/SocketContext";
 
@@ -13,8 +13,6 @@ function MessageContainer({
 }: {
   conversationInfo: ConversationInfo | undefined;
 }) {
-  const [forceUpdate, setForceUpdate] = useState(0);
-
   let conversationId: string | undefined;
 
   if (conversationInfo) {
@@ -37,12 +35,16 @@ function MessageContainer({
 
       if (allMessages === undefined) return;
 
-      addNewMessage({
-        messageId: timestampString,
-        messageInfo: data,
-        allMessages,
-        setAllMessages,
-      });
+      // adding this delay to help deal with the
+      // virtual keyboard issue.
+      setTimeout(() => {
+        addNewMessage({
+          messageId: timestampString,
+          messageInfo: data,
+          allMessages,
+          setAllMessages,
+        });
+      }, 100);
     };
 
     if (conversationId === undefined) return;
@@ -57,19 +59,6 @@ function MessageContainer({
 
   // re-render if userId is changed.
   useEffect(() => {}, [userId]);
-
-  // force update if container size changes.
-  // for toggling of virtual keyboard on mobile.
-  useEffect(() => {
-    const handleResize = () => {
-      // Trigger a re-render when the keyboard is shown or hidden
-      setForceUpdate((prev) => prev + 1);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <>
