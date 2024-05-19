@@ -4,7 +4,7 @@ import useGetSingleConversation from "@/hooks/useGetSingleConversation";
 import MessageHeader from "./MessageHeader";
 import MessageBody from "./MessageBody";
 import MessageFooter from "./MessageFooter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ConversationInfo } from "@/contexts/ActiveConversationId";
 import { useSocket } from "@/contexts/SocketContext";
 
@@ -13,6 +13,10 @@ function MessageContainer({
 }: {
   conversationInfo: ConversationInfo | undefined;
 }) {
+  // it's purpose is only to re-render the component
+  // to make sure the new message appears on mobile.
+  const [set, setSet] = useState<number>(0);
+
   let conversationId: string | undefined;
 
   if (conversationInfo) {
@@ -41,6 +45,8 @@ function MessageContainer({
         allMessages,
         setAllMessages,
       });
+
+      setSet((prevState) => prevState + 1);
     };
 
     if (conversationId === undefined) return;
@@ -55,6 +61,11 @@ function MessageContainer({
 
   // re-render if userId is changed.
   useEffect(() => {}, [userId]);
+
+  // re-render if set is changed.
+  useEffect(() => {
+    // do nothing.
+  }, [set]);
 
   return (
     <>
