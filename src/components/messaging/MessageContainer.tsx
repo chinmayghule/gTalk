@@ -4,7 +4,7 @@ import useGetSingleConversation from "@/hooks/useGetSingleConversation";
 import MessageHeader from "./MessageHeader";
 import MessageBody from "./MessageBody";
 import MessageFooter from "./MessageFooter";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { ConversationInfo } from "@/contexts/ActiveConversationId";
 import { useSocket } from "@/contexts/SocketContext";
 
@@ -27,7 +27,7 @@ function MessageContainer({
   // effects.
   // listen for incoming message event.
   // cleanup for socket when component unmounts.
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!socket) return;
 
     const handleIncomingMessage = (data: any) => {

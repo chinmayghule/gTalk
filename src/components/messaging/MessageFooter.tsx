@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Socket } from "socket.io-client";
 import {
@@ -24,6 +24,8 @@ function MessageFooter({
   const { friendId } = conversationDetails!;
   const { isDesktop } = useViewportSize();
 
+  const messageInputRef = useRef<HTMLInputElement>(null);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -40,6 +42,10 @@ function MessageFooter({
 
     socket.emit("messageToServer", messageInfo);
     setMessage("");
+
+    if (messageInputRef.current) {
+      messageInputRef.current.focus();
+    }
   };
 
   return (
@@ -50,6 +56,7 @@ function MessageFooter({
           placeholder="Type a message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          ref={messageInputRef}
         />
         {!isDesktop && <SubmitMessageBtn />}
       </form>
